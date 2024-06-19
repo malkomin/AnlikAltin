@@ -1,95 +1,38 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import CurrencyScreen from './CurrencyScreen'; // CurrencyScreen dosyasının bulunduğu yol
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import MainScreen from './screens/MainScreen';
+import CurrencyScreen from './screens/CurrencyScreen';
+import NotDrawerScreen from './screens/NotDrawerScreen';
+import CustomHeader from './screens/base/CustomHeader';
+const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
+
+function DrawerNavigator() {
+  return (
+    // initialRouteName burada uygulamanın ilk açılacağı ekran demek
+    <Drawer.Navigator initialRouteName="Main" screenOptions={{
+      headerBackground: (props) => <CustomHeader />,
+    }}> 
+    {/* Ekranları burada ekliyoruz. Menüde olmasını istediğimiz her ekranı buraya isim ile giriyoruz. */}
+      <Drawer.Screen name="Main" component={MainScreen} />
+      <Drawer.Screen name="Currency" component={CurrencyScreen} />
+    </Drawer.Navigator>
+  );
+}
 
 export default function App() {
-  const handleMenuPress = () => {
-    Alert.alert('Menü butonuna tıkladınız!! ZORT');
-  };
-
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={['#ff7e5f', '#feb47b']} // Geçiş yapmak istediğiniz renkleri buraya ekleyin
-        style={styles.headerContainer}
-      >
-        <TouchableOpacity style={styles.menuButton} onPress={handleMenuPress}>
-          <Text style={styles.menuButtonText}>...</Text>
-        </TouchableOpacity>
-        <Text style={styles.header}>Başlık</Text>
-        <Image
-          source={{ uri: 'https://purepng.com/public/uploads/large/purepng.com-gold-coinsflatcoinsroundmetalgoldclipart-1421526479508ifey0.png' }} // Logonun URL'sini buraya ekleyin
-          style={styles.logo}
-        />
-      </LinearGradient>
-      <View style={styles.contentContainer}>
-        <CurrencyScreen />
-      </View>
-    </View>
+    <NavigationContainer>
+     <Stack.Navigator >
+       {/* Drawer burada bizim yan menüye koymak istediğimiz ekranları topluyor. Yandan açılan menüye bir şey eklemek istersek DrawerNavigator 
+       içerisinde ekliyoruz. */}
+      <Stack.Screen name="Drawer" component={DrawerNavigator} options={{ headerShown: false }} />
+      {/* Eğer olur da yan menüde göstermek istemezsek ama uygulama içerisinde bir tuşa basarak farklı bir ekrana yönlendirme yapmak istersek 
+      buraya eklememiz gerekiyor. Currency içerisindeki buton NotDrawer ekranına gidecek */}
+      <Stack.Screen name="NotDrawer" component={NotDrawerScreen}/>
+    </Stack.Navigator>
+  </NavigationContainer>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  headerContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: 50, // Cihazın durum çubuğuna göre başlık aşağıda olacak şekilde
-    paddingBottom: 10,
-    width: '100%',
-  },
-  menuButton: {
-    padding: 10,
-  },
-  menuButtonText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  logo: {
-    width: 30,
-    height: 30,
-  },
-  contentContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  button: {
-    backgroundColor: 'red',
-    padding: 10,
-    margin: 20,
-    borderRadius: 5,
-  },
-  valuesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
-    backgroundColor: '#eaeaea',
-  },
-  valueItem: {
-    alignItems: 'center',
-  },
-  valueLabel: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  valueText: {
-    fontSize: 16,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-});
+}
