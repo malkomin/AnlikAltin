@@ -50,17 +50,18 @@ const CurrencyScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={styles.header}>Döviz Kurları (TRY)</Text>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.tableHeader}>
-          <Text style={styles.headerCell}>Birim</Text>
-          <Text style={styles.headerCell}>Alış</Text>
-          <Text style={styles.headerCell}>Satış</Text>
+          <Text style={[styles.headerCell, styles.headerText]}>Birim</Text>
+          <Text style={[styles.headerCell, styles.headerText]}>Alış</Text>
+          <Text style={[styles.headerCell, styles.headerText]}>Satış</Text>
         </View>
         {Object.keys(currencyData.rates).map((currencyCode) => (
           <View key={currencyCode} style={styles.tableRow}>
-            <Text style={styles.cell}>{currencyCode}</Text>
-            <Text style={styles.cell}>{currencyData.rates[currencyCode].buy}</Text>
-            <Text style={styles.cell}>{currencyData.rates[currencyCode].sell}</Text>
+            <Text style={[styles.cell, styles.cellText]}>{currencyCode}</Text>
+            <Text style={[styles.cell, styles.cellText]}>{currencyData.rates[currencyCode].buy}</Text>
+            <Text style={[styles.cell, styles.cellText]}>{currencyData.rates[currencyCode].sell}</Text>
           </View>
         ))}
       </ScrollView>
@@ -71,53 +72,66 @@ const CurrencyScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F5F5F5',
+    paddingHorizontal: 10,
   },
   loadingContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   errorContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   errorText: {
     fontSize: 18,
-    color: '#000000',
+    color: '#FF0000',
+    textAlign: 'center',
   },
   header: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     marginVertical: 20,
-    color: '#000000',
+    color: '#333333',
     textAlign: 'center',
   },
   scrollView: {
     flexGrow: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+    paddingVertical: 10,
   },
   tableHeader: {
     flexDirection: 'row',
-    backgroundColor: '#cccccc',
+    backgroundColor: '#CCCCCC',
     paddingVertical: 10,
     paddingHorizontal: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#AAAAAA',
   },
   headerCell: {
     flex: 1,
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  headerText: {
+    fontSize: 16,
+    color: '#333333',
+  },
   tableRow: {
     flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: '#dddddd',
     paddingVertical: 10,
     paddingHorizontal: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#DDDDDD',
   },
   cell: {
     flex: 1,
     textAlign: 'center',
+  },
+  cellText: {
+    fontSize: 16,
+    color: '#333333',
   },
 });
 

@@ -28,6 +28,9 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "entryPoint": "index.js"
+    "entryPoint": "index.js",
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
