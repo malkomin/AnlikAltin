@@ -18,6 +18,7 @@ import PrivacyPolicyScreen from './screens/PrivacyPolicyScreen';
 import LegalNoticeScreen from './screens/LegalNoticeScreen';
 import DeleteAccountScreen from './screens/DeleteAccountScreen';
 import LogoutScreen from './screens/LogoutScreen';
+import IletisimScreen from './screens/IletisimScreen';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -32,8 +33,9 @@ function DrawerNavigator() {
     >
       <Drawer.Screen name="Güven Gold" component={MainScreen} />
       <Drawer.Screen name="Altın" component={CurrencyScreen} />
-      <Drawer.Screen name="Ayarlar" component={AyarlarScreen} />
       <Drawer.Screen name="Sarrafiye İşçilikleri" component={GoldRatesScreen} />
+      <Drawer.Screen name="İletişime Geçin" component={IletisimScreen} />
+      <Drawer.Screen name="Ayarlar" component={AyarlarScreen} />
     </Drawer.Navigator>
   );
 }

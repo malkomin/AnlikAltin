@@ -1,6 +1,5 @@
-// screens/AyarlarScreen.js
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 const AyarlarScreen = ({ navigation }) => {
   const settingsOptions = [
@@ -13,31 +12,41 @@ const AyarlarScreen = ({ navigation }) => {
     'Kişisel Verilerin Korunması',
     'Yasal Uyarı',
     'Hesabı Sil',
-    'Çıkış Yap',
   ];
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {settingsOptions.map((option, index) => (
-        <TouchableOpacity
-          key={index}
-          style={[styles.option, option === 'Çıkış Yap' && styles.logoutOption]}
-          onPress={() => navigation.navigate(option)}
-        >
-          <Text style={[styles.optionText, option === 'Çıkış Yap' && styles.logoutText]}>{option}</Text>
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
+    <View style={styles.container}>
+      <View style={styles.optionsContainer}>
+        {settingsOptions.map((option, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.option}
+            onPress={() => navigation.navigate(option)}
+          >
+            <Text style={styles.optionText}>{option}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+      <TouchableOpacity
+        style={styles.logoutOption}
+        onPress={() => navigation.navigate('Çıkış Yap')}
+      >
+        <Text style={styles.logoutText}>Çıkış Yap</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+  optionsContainer: {
+    flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingVertical: 20,
-    paddingBottom: 0, // This will remove the bottom padding from ScrollView
+    paddingTop: 10, // Hesap Bilgileri seçeneğini biraz daha yukarı almak için
   },
   option: {
     width: '100%',
@@ -48,15 +57,18 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 18,
+    color: '#000',
   },
   logoutOption: {
-    marginTop: 'auto',
+    width: '100%',
     backgroundColor: '#FF5733', // Headerdaki renkten
-    paddingBottom: 40, // Additional padding to cover the bottom
+    paddingVertical: 15,
+    alignItems: 'center',
   },
   logoutText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontSize: 18,
   },
 });
 
