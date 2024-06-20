@@ -20,7 +20,11 @@ const CurrencyScreen = () => {
       const convertedData = {
         ...data,
         rates: Object.keys(data.rates).reduce((acc, key) => {
-          acc[key] = { buy: (data.rates[key] * tryRate).toFixed(2), sell: (data.rates[key] * tryRate + 0.1).toFixed(2) }; // USD'yi TRY'ye çevir
+          acc[key] = { 
+            buy: (data.rates[key] * tryRate).toFixed(2), 
+            sell: (data.rates[key] * tryRate + 0.1).toFixed(2),
+            fullName: getCurrencyFullName(key), // Para biriminin tam adı
+          };
           return acc;
         }, {}),
       };
@@ -29,6 +33,16 @@ const CurrencyScreen = () => {
     } catch (error) {
       console.error('Veri alınırken hata oluştu:', error);
       setLoading(false);
+    }
+  };
+
+  // Fonksiyon: Para biriminin tam adını döndürür
+  const getCurrencyFullName = (currencyCode) => {
+    switch (currencyCode) {
+      case 'USD': return 'United States Dollar';
+      case 'TRY': return 'Turkish Lira';
+      // Diğer para birimlerini de ekleyebilirsiniz
+      default: return currencyCode; // Varsayılan olarak para birimi kodunu döndürür
     }
   };
 
@@ -53,15 +67,20 @@ const CurrencyScreen = () => {
       <Text style={styles.header}>Döviz Kurları (TRY)</Text>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.tableHeader}>
-          <Text style={[styles.headerCell, styles.headerText]}>Birim</Text>
+          <Text style={[styles.headerCell, styles.headerText, styles.leftAlign]}>Birim</Text>
           <Text style={[styles.headerCell, styles.headerText]}>Alış</Text>
           <Text style={[styles.headerCell, styles.headerText]}>Satış</Text>
         </View>
-        {Object.keys(currencyData.rates).map((currencyCode) => (
+        {Object.keys(currencyData.rates).map((currencyCode, index) => (
           <View key={currencyCode} style={styles.tableRow}>
-            <Text style={[styles.cell, styles.cellText]}>{currencyCode}</Text>
+            <Text style={[styles.cell, styles.cellText, styles.leftAlign]}>
+              {currencyCode} ({currencyData.rates[currencyCode].fullName})
+            </Text>
             <Text style={[styles.cell, styles.cellText]}>{currencyData.rates[currencyCode].buy}</Text>
             <Text style={[styles.cell, styles.cellText]}>{currencyData.rates[currencyCode].sell}</Text>
+            {index !== Object.keys(currencyData.rates).length - 1 && (
+              <View style={styles.separator} />
+            )}
           </View>
         ))}
       </ScrollView>
@@ -103,7 +122,7 @@ const styles = StyleSheet.create({
   },
   tableHeader: {
     flexDirection: 'row',
-    backgroundColor: '#CCCCCC',
+    backgroundColor: '#FF5733',
     paddingVertical: 10,
     paddingHorizontal: 5,
     borderBottomWidth: 1,
@@ -116,14 +135,23 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 16,
-    color: '#333333',
+    color: 'white',
+  },
+  leftAlign: {
+    textAlign: 'left',
+    paddingLeft: 10, // Sol boşluk ekleyerek sola hizalama yapılıyor
   },
   tableRow: {
     flexDirection: 'row',
     paddingVertical: 10,
     paddingHorizontal: 5,
     borderBottomWidth: 1,
-    borderBottomColor: '#DDDDDD',
+    borderBottomColor: '#FF5733', // Satırları ayıran çizginin rengi
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#FF5733', // Satır aralarındaki çizginin rengi
+    marginVertical: 5,
   },
   cell: {
     flex: 1,
