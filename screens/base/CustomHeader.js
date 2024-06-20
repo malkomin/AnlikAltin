@@ -6,7 +6,7 @@ const CustomHeader = (props) => {
   // Burada siz styling flan çözersiniz. Ben aklımı yitirdim. 
   return (
     <LinearGradient
-    colors={['red', 'blue']}
+    colors={['#FD4601', '#FF7E01']}
     style={[StyleSheet.absoluteFill, { height: Header.HEIGHT }]}
   />
   );

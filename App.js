@@ -16,7 +16,7 @@ function DrawerNavigator() {
       headerBackground: (props) => <CustomHeader />,
     }}> 
     {/* Ekranları burada ekliyoruz. Menüde olmasını istediğimiz her ekranı buraya isim ile giriyoruz. */}
-      <Drawer.Screen name="Main" component={MainScreen} />
+      <Drawer.Screen name="Güven Gold" component={MainScreen} />
       <Drawer.Screen name="Currency" component={CurrencyScreen} />
     </Drawer.Navigator>
   );

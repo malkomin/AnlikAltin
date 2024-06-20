@@ -20,7 +20,7 @@ const CurrencyScreen = () => {
       const convertedData = {
         ...data,
         rates: Object.keys(data.rates).reduce((acc, key) => {
-          acc[key] = (data.rates[key] * tryRate).toFixed(2); // USD'yi TRY'ye çevir
+          acc[key] = { buy: (data.rates[key] * tryRate).toFixed(2), sell: (data.rates[key] * tryRate + 0.1).toFixed(2) }; // USD'yi TRY'ye çevir
           return acc;
         }, {}),
       };
@@ -50,16 +50,18 @@ const CurrencyScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>Döviz Kurları (TRY)</Text>
       <ScrollView contentContainerStyle={styles.scrollView}>
+        <View style={styles.tableHeader}>
+          <Text style={styles.headerCell}>Birim</Text>
+          <Text style={styles.headerCell}>Alış</Text>
+          <Text style={styles.headerCell}>Satış</Text>
+        </View>
         {Object.keys(currencyData.rates).map((currencyCode) => (
-          <LinearGradient
-            key={currencyCode}
-            colors={['#ff7e5f', '#feb47b']}
-            style={styles.currencyItem}
-          >
-            <Text style={styles.currencyText}>{currencyCode}: {currencyData.rates[currencyCode]}</Text>
-          </LinearGradient>
+          <View key={currencyCode} style={styles.tableRow}>
+            <Text style={styles.cell}>{currencyCode}</Text>
+            <Text style={styles.cell}>{currencyData.rates[currencyCode].buy}</Text>
+            <Text style={styles.cell}>{currencyData.rates[currencyCode].sell}</Text>
+          </View>
         ))}
       </ScrollView>
     </SafeAreaView>
@@ -94,21 +96,28 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingHorizontal: 20,
     paddingVertical: 20,
-    alignItems: 'stretch',
   },
-  currencyItem: {
-    flex: 1,
+  tableHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    backgroundColor: '#cccccc',
     paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 10,
+    paddingHorizontal: 5,
   },
-  currencyText: {
-    fontSize: 16,
-    color: '#000000',
+  headerCell: {
+    flex: 1,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#dddddd',
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+  },
+  cell: {
+    flex: 1,
+    textAlign: 'center',
   },
 });
 
